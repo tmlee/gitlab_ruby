@@ -44,8 +44,4 @@ describe GitlabRuby::QueryChain do
       end
     end
   end
-
-  it 'is chainable with methods' do
-    pending
-  end
 end

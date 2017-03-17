@@ -36,7 +36,6 @@ module GitlabRuby
       response = connection(method_name, options, verb)
       puts response.inspect if self.class.debug
       result = parse_response(response)
-
       if result.is_a? Array
         result.map { |item| APIObject.new(item) }
       elsif result.is_a? Hash
@@ -47,10 +46,10 @@ module GitlabRuby
     private
 
     def parse_response(response)
-      if response.status.to_i == 200
-        JSON.parse(response.body)
+      if response.status.to_i >= 400
+        GitlabRuby::check_response_status(response)
       else
-        raise response.status.to_s
+        JSON.parse(response.body)
       end
     end
 
