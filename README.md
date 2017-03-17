@@ -1,30 +1,72 @@
 # GitlabRuby
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/gitlab_ruby`. To experiment with that code, run `bin/console` for an interactive prompt.
+GitlabRuby is a Ruby API wrapper for the [Gitlab API](https://docs.gitlab.com/ce/api/README.html).
 
-TODO: Delete this and the text above, and describe your gem
+Note: Not Production Ready
 
 ## Installation
 
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'gitlab_ruby'
+gem 'gitlab_ruby', github: 'tmlee/gitlab_ruby'
 ```
 
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
+## Getting Started
 
-    $ gem install gitlab_ruby
+```ruby
+    API_KEY   = "OBTAIN API KEY FROM GITLAB.com"
+    client    = GitlabRuby::Client.new(token: API_KEY)
+    projects  = client.get.version("v4").projects.execute # List all projects
+
+    # Returned API objects are accessible like any Ruby object
+    projects.first.name
+    projects.last.description
+```
 
 ## Usage
 
-TODO: Write usage instructions here
+GitlabRuby uses method chaining to construct an API call.
+
+[List Projects](https://docs.gitlab.com/ce/api/projects.html#projects)
+```
+    GET /projects
+```
+Translates to
+```ruby
+    client.get.version('v4').projects.execute
+```
+
+[Get Single Project](https://docs.gitlab.com/ce/api/projects.html##get-single-project)
+```
+    GET /projects/:id
+```
+Translates to
+```ruby
+    client.get.version('v4').projects.id('gitlab-org%2Fgitlab-ce').execute
+```
+URL parameters works like calling a method
+
+[Create Project](https://docs.gitlab.com/ce/api/projects.html#create-project)
+```
+    POST /projects
+```
+Translates to
+```ruby
+    client.post.version('v4').projects.execute(name: 'New Gitlab Project')
+```
+Query parameters are passed into the `execute` method
+
+
+Refer to the complete [https://docs.gitlab.com/ce/api/](API endpoints).
 
 ## Development
+
+Since the [Gitlab](https://gitlab.com/gitlab-org/gitlab-ce) codebase is open source, GitlabRuby attempts to use Ruby metaprogramming to generate an intuitive API library from the list of possible endpoints which Gitlab supports.
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
 
