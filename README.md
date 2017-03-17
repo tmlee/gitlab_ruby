@@ -2,7 +2,7 @@
 
 GitlabRuby is a Ruby API wrapper for the [Gitlab API](https://docs.gitlab.com/ce/api/README.html).
 
-Note: Not Production Ready
+_Note:_ Not Production Ready
 
 ## Installation
 
@@ -20,8 +20,8 @@ And then execute:
 
 ```ruby
     API_KEY   = "OBTAIN API KEY FROM GITLAB.com"
-    client    = GitlabRuby::Client.new(token: API_KEY)
-    projects  = client.get.version("v4").projects.execute # List all projects
+    client    = GitlabRuby::Client.new(token: API_KEY, version: 'v4')
+    projects  = client.get.projects.execute # List all projects
 
     # Returned API objects are accessible like any Ruby object
     projects.first.name
@@ -32,37 +32,45 @@ And then execute:
 
 GitlabRuby uses method chaining to construct an API call.
 
-[List Projects](https://docs.gitlab.com/ce/api/projects.html#projects)
+#### [List Projects](https://docs.gitlab.com/ce/api/projects.html#projects)
 ```
     GET /projects
 ```
 Translates to
 ```ruby
-    client.get.version('v4').projects.execute
+    client.get.projects.execute
 ```
 
-[Get Single Project](https://docs.gitlab.com/ce/api/projects.html##get-single-project)
+#### [Get Single Project](https://docs.gitlab.com/ce/api/projects.html##get-single-project)
 ```
     GET /projects/:id
+
+    # /projects/'gitlab-org%2Fgitlab-ce'
 ```
 Translates to
 ```ruby
-    client.get.version('v4').projects.id('gitlab-org%2Fgitlab-ce').execute
+    client.get.projects.id('gitlab-org%2Fgitlab-ce').execute
 ```
 URL parameters works like calling a method
 
-[Create Project](https://docs.gitlab.com/ce/api/projects.html#create-project)
+#### [Create Project](https://docs.gitlab.com/ce/api/projects.html#create-project)
 ```
     POST /projects
+    
+    # with params
+    {
+      name: 'New Gitlab Project'
+    }
 ```
 Translates to
 ```ruby
-    client.post.version('v4').projects.execute(name: 'New Gitlab Project')
+    client.post.projects.execute(name: 'New Gitlab Project')
 ```
 Query parameters are passed into the `execute` method
 
+#### Complete API
 
-Refer to the complete [https://docs.gitlab.com/ce/api/](API endpoints).
+Refer to the complete [https://docs.gitlab.com/ce/api/](documentation) endpoints.
 
 ## Development
 

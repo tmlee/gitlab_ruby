@@ -1,11 +1,13 @@
 module GitlabRuby
   class Client
     BASE_URL = "https://gitlab.com/api/"
+    LATEST_VERSION = 'v4'
 
     def initialize(params={})
       @token = params[:token]
       @urlstring = ""
       @endpoint = params[:endpoint] || BASE_URL
+      @version = params[:version] || LATEST_VERSION
     end
 
     def self.debug
@@ -45,6 +47,10 @@ module GitlabRuby
 
     private
 
+    def versioned_url
+      BASE_URL + @version + "/"
+    end
+
     def parse_response(response)
       if response.status.to_i >= 400
         GitlabRuby::check_response_status(response)
@@ -54,7 +60,7 @@ module GitlabRuby
     end
 
     def connection(method_name, options, verb)
-      conn = Faraday.new(url: BASE_URL) do |faraday|
+      conn = Faraday.new(url: versioned_url) do |faraday|
         faraday.request  :url_encoded
         faraday.response(:logger) if self.class.debug
         faraday.adapter  Faraday.default_adapter
