@@ -1,15 +1,25 @@
+[![Build Status](https://travis-ci.org/tmlee/gitlab_ruby.svg?branch=master)](https://travis-ci.org/tmlee/gitlab_ruby)
+
 # GitlabRuby
 
-GitlabRuby is a Ruby API wrapper for the [Gitlab API](https://docs.gitlab.com/ce/api/README.html).
+GitlabRuby is a Gitlab library for Ruby supporting the [Gitlab API](https://docs.gitlab.com/ce/api/README.html).
+GitlabRuby aims to be adaptive to the Gitlab API and simple to use.
 
-_Note:_ Not Production Ready
+* Adaptive: Gitlab project is open sourced and new features are added frequently. GitlabRuby should be able to automatically parse all endpoints from that project.
+* Simple: GitlabRuby should be simple that you will only have to refer to the Gitlab API official documentation to make any calls you intended to.
 
 ## Installation
 
-Add this line to your application's Gemfile:
+Install from rubygems:
+
+```
+    gem install gitlab_ruby
+```
+
+Or add this line to your application's Gemfile:
 
 ```ruby
-gem 'gitlab_ruby', github: 'tmlee/gitlab_ruby'
+    gem 'gitlab_ruby'
 ```
 
 And then execute:
@@ -19,9 +29,9 @@ And then execute:
 ## Getting Started
 
 ```ruby
-    API_KEY   = "OBTAIN API KEY FROM GITLAB.com"
+    API_KEY   = 'USER_TOKEN'                                            # OBTAIN API KEY FROM GITLAB.com
     client    = GitlabRuby::Client.new(token: API_KEY, version: 'v4')
-    projects  = client.get.projects.execute # List all projects
+    projects  = client.get.projects.execute                             # List all projects
 
     # Returned API objects are accessible like any Ruby object
     projects.first.name
@@ -30,7 +40,47 @@ And then execute:
 
 ## Usage
 
-GitlabRuby uses method chaining to construct an API call.
+#### Configurations
+
+```ruby
+    client    = GitlabRuby::Client.new(
+                    token: API_KEY,                         # user's private token or OAuth2 access token
+                    version: 'v4',                          # choose API version, default: v4
+                    endpoint: 'https://example.com/api/'    # Custom endpoint for self-hosted Gitlab, default: https://gitlab.com/api/
+                )
+```
+
+#### Interacting with Gitlab API
+
+GitlabRuby aims to allow interaction with the Gitlab API using method chaining syntax, while also adhering closely to the way the Gitlab API is structured. You should only need to refer to the [Gitlab API documentation](https://docs.gitlab.com/ce/api/README.html) when using GitlabRuby.
+
+#### How it works
+
+Assume the following API endpoint
+```
+    POST /projects/:id/share
+
+    Attribute       Type            Required    Description
+    id              integer/string  yes         The ID of the project or NAMESPACE/PROJECT_NAME
+    group_id        integer         yes         The ID of the group to share with
+    group_access    integer         yes         The permissions level to grant the group
+    expires_at      string          no          Share expiration date in ISO 8601 format: 2016-09-26
+```
+
+You would call it with
+
+```ruby
+    client.post.projects.id(project_id).share.execute(
+        group_id: group_id, 
+        group_access: access
+    )
+```
+
+Start the query with a `get`, `post`, `put`, or `delete`.
+
+Pass any additional parameters in `execute` to make the API call.
+
+## More Examples
 
 #### [List Projects](https://docs.gitlab.com/ce/api/projects.html#projects)
 ```
@@ -84,6 +134,10 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/gitlab_ruby. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
+## TODO
+[] Script to automatically update API routes from Gitlab CE project
+[] Support sudo
+[] Support pagination
 
 ## License
 

@@ -9,9 +9,9 @@ Gem::Specification.new do |spec|
   spec.authors       = ["TM Lee"]
   spec.email         = ["tm89lee@gmail.com"]
 
-  spec.summary       = %q{Ruby wrapper for the Gitlab API V4}
-  spec.description   = %q{Ruby wrapper for the Gitlab API V4}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Ruby wrapper for the Gitlab API (Supports V3 & V4)}
+  spec.description   = %q{Interact with Gitlab API on Ruby with method chaining}
+  spec.homepage      = "https://github.com/tmlee/gitlab_ruby"
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
