@@ -3,7 +3,7 @@ require "gitlab_ruby"
 require "vcr"
 require 'byebug'
 
-TEST_API_KEY = "TODO: ENTER GITLAB API KEY HERE"
+TEST_API_KEY = "mP3Wi_Dw5L5MegyGnSqx" # Working API Key of a test account
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

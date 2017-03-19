@@ -41,20 +41,20 @@ describe GitlabRuby do
       expect{ client.get.projects.id(100).execute }.to raise_error GitlabRuby::NotFoundError
     end
 
-    it 'raises method not allowed error' do
-      skip "NOT IMPLEMENTED"
-    end
+    # it 'raises method not allowed error' do
+    #   skip "NOT IMPLEMENTED"
+    # end
 
     it 'raises conflict error', vcr: true do
       expect{ client.put.projects.id(2868483).execute(name: "UPDATE") }.to raise_error GitlabRuby::ForbiddenError
     end
 
-    it 'raises unprocessable error' do
-      skip "NOT IMPLEMENTED"
-    end
+    # it 'raises unprocessable error' do
+    #   skip "NOT IMPLEMENTED"
+    # end
 
-    it 'raises server error' do
-      skip "NOT IMPLEMENTED"
-    end
+    # it 'raises server error' do
+    #   skip "NOT IMPLEMENTED"
+    # end
   end
 end
