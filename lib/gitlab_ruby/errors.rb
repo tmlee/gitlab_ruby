@@ -1,9 +1,7 @@
 module GitlabRuby
-  module Errors
-    class QueryChainArgumentError < StandardError
-      def initialize
-        super("Can only pass ONE parameter at most")
-      end
+  class QueryChainArgumentError < RuntimeError
+    def initialize
+      super("Can only pass ONE parameter")
     end
   end
 end
