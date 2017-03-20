@@ -39,7 +39,11 @@ module GitlabRuby
       puts response.inspect if self.class.debug
       result = parse_response(response)
       if result.is_a? Array
-        result.map { |item| APIObject.new(item) }
+        GitlabRuby::PaginatedResponse.new(
+          client: self,
+          array: result.map { |item| APIObject.new(item) },
+          headers: response.headers
+        )
       elsif result.is_a? Hash
         APIObject.new(result)
       end

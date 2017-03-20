@@ -118,6 +118,16 @@ Translates to
 ```
 Query parameters are passed into the `execute` method
 
+#### Pagination
+```ruby
+    projects.next_page?     # returns true or false
+    projects.prev_page?     # returns true or false
+    projects.next_page      # make API call to fetch next page
+    projects.prev_page      # make API call to fetch prev page
+    projects.first_page     # make API call to fetch first page
+    projects.last_page      # make API call to fetch last page
+```
+
 #### Complete API
 
 Refer to the complete [https://docs.gitlab.com/ce/api/](documentation) endpoints.
@@ -135,10 +145,12 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/gitlab_ruby. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## TODO
+
 - [] Script to automatically update API routes from Gitlab CE project
 - [] Support sudo
-- [] Support pagination
+- [/] Support pagination
 - [] Support more versions of Rubies (by dropping some gem dependencies)
+- [] Refactor and reduce coupling within classes
 
 ## License
 

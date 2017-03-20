@@ -23,6 +23,18 @@ describe GitlabRuby do
     expect(project2.urlstring).to eq 'projects/2868483/'
   end
 
+  describe 'Pagination' do
+    it 'next_page?', vcr: true do
+      projects = client.get.projects.execute
+      expect(projects.next_page?).to be true
+    end
+    it 'fetches the next page', vcr: true do
+      projects = client.get.projects.execute
+      projects = projects.next_page
+      expect(projects.prev_page?).to be true
+    end
+  end
+
   describe 'Errors' do
     it 'raises bad request error', vcr: true do
       expect{ client.post.projects.execute }.to raise_error GitlabRuby::BadRequestError
